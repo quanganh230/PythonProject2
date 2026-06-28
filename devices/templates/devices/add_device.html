@@ -14,7 +14,8 @@
     {% endif %}
 
     <form method="POST">
-        {% csrf_block %}{% csrf_token %}
+        {% csrf_token %}
+
         <div class="mb-3">
             <label class="form-label">Mã Thiết Bị (đúng 12 ký tự):</label>
             <input type="text" name="device_id" class="form-control" required minlength="12" maxlength="12">
@@ -35,7 +36,7 @@
             <label class="form-label">Thời Gian Bảo Hành (Tháng):</label>
             <input type="number" name="warranty_months" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-success">Lưu Thiết Bị</button>
+        <button type="submit" class="btn btn-success">khong luu</button>
         <a href="{% url 'dashboard' %}" class="btn btn-text">Hủy</a>
     </form>
 </body>
