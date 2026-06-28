@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Thêm Thiết Bị Mới</title>
+</head>
+<body class="container mt-5" style="max-width: 600px;">
+    <h2>Thêm Thiết Bị Mới</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_block %}{% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Mã Thiết Bị (đúng 12 ký tự):</label>
+            <input type="text" name="device_id" class="form-control" required minlength="12" maxlength="12">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tên Thiết Bị:</label>
+            <input type="text" name="device_name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Thương Hiệu:</label>
+            <input type="text" name="brand" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Giá Mua ($):</label>
+            <input type="number" name="purchase_price" step="0.01" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Thời Gian Bảo Hành (Tháng):</label>
+            <input type="number" name="warranty_months" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success">Lưu Thiết Bị</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-text">Hủy</a>
+    </form>
+</body>
+</html>

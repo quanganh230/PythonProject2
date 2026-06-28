@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Hệ thống Quản lý Thiết bị</title>
+</head>
+<body class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Danh Sách Thiết Bị Hệ Thống</h2>
+        <div>
+            <a href="{% url 'add_device' %}" class="btn btn-primary">Thêm Thiết Bị</a>
+            <a href="{% url 'charts' %}" class="btn btn-success">Xem Biểu Đồ Thống Kê</a>
+        </div>
+    </div>
+
+    <form action="{% url 'search_device' %}" method="GET" class="row g-2 mb-3">
+        <div class="col-auto">
+            <input type="text" name="q" class="form-control" placeholder="Tìm theo tên hoặc hãng..." value="{{ query|default:'' }}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-secondary">Tìm kiếm</button>
+        </div>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Mã Thiết Bị</th>
+                <th>Tên Thiết Bị</th>
+                <th>Thương Hiệu</th>
+                <th>Giá Mua ($)</th>
+                <th>Bảo Hành (Tháng)</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for device in devices %}
+            <tr>
+                <td>{{ device.device_id }}</td>
+                <td>{{ device.device_name }}</td>
+                <td>{{ device.brand }}</td>
+                <td>{{ device.purchase_price }}</td>
+                <td>{{ device.warranty_months }}</td>
+                <td>
+                    <a href="{% url 'delete_device' device.device_id %}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn chắc chắn muốn xóa?')">Xóa</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">Chưa có thiết bị nào trong hệ thống.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
